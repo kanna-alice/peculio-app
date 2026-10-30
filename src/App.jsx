@@ -1,10 +1,23 @@
-import { auth, db } from './services/firebase'
+import { Routes, Route, Navigate } from "react-router-dom";
+import PrivateRoute from "./components/layout/PrivateRoute";
+import Login from "./pages/login";
+import Cadastro from "./pages/Cadastro";
+import Dashboard from "./pages/Dashboard";
 
-console.log('Firebase conectado:', auth, db)
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold text-pink-600 p-8">
-      Pecúlio 💰
-    </h1>
-  )
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/cadastro" element={<Cadastro />} />
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
 }
